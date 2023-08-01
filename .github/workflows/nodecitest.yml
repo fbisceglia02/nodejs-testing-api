@@ -1,0 +1,43 @@
+name: node ci test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: ['ubuntu-lastest', 'windows-2016']
+        node-version: [16.x, 18.x]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: use node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+      - run: npm run build --if-present
+
+  test:
+    
+        runs-on: ${{ matrix.os }}
+        strategy:
+          matrix:
+            os: ['ubuntu-lastest', 'windows-2016']
+            node-version: [16.x, 18.x]
+    
+        steps:
+          - uses: actions/checkout@v3
+          - name: use node.js ${{ matrix.node-version }}
+            uses: actions/setup-node@v1
+            with:
+              node-version: ${{ matrix.node-version }}
+          - run: npx jest
+            env:
+              CI: true
