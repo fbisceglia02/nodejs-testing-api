@@ -42,7 +42,12 @@ jobs:
       run: ls -la
 
     - name: Set execute permissions for test file
-      run: chmod +x sum.test.js
+      run: |
+        chmod +x sum.test.js
+        chmod +x app.js
+        chmod +x sum.js
+        chmod +x server.js
+
 
     - name: list the directories after the chmod
       run: ls -la
