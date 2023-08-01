@@ -36,6 +36,8 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - name: Set execute permissions for test file
+      run: chmod +x sum.test.js
     - name: npm install, and test
       run: |
         npm install
