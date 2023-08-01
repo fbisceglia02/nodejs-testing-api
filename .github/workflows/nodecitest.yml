@@ -32,15 +32,25 @@ jobs:
         node-version: [17.x, 18.x]
     steps:
     - uses: actions/checkout@v1
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+
+    - name: list the directories before the chmod
+      run: ls -la
+
     - name: Set execute permissions for test file
       run: chmod +x sum.test.js
+
+    - name: list the directories after the chmod
+      run: ls -la
+
     - name: npm install, and test
       run: |
         npm install
         npm test
+
       env:
         CI: true
